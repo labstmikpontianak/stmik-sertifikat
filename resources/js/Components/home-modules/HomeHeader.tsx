@@ -67,9 +67,10 @@ const HomeHeader: React.FC<Props> = ({ categoryData, handleParamsChange }) => {
                 <Button
                     variant="outline"
                     className="bg-transparent text-white border-2"
-                    asChild
+                    disabled
                 >
-                    <Link href="login">Masuk Admin</Link>
+                    Disabled Button
+                    {/* <Link href="#">Disable Button</Link> */}
                 </Button>
             </div>
         </header>

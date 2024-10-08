@@ -22,7 +22,8 @@ class StoreCertificateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'file' => ['required', 'mimes:xlsx,csv'],
+            'category_id' => ['required', 'string']
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Certificate;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
+use App\Imports\CertificateImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CertificateController extends Controller
 {
@@ -29,7 +31,9 @@ class CertificateController extends Controller
      */
     public function store(StoreCertificateRequest $request)
     {
-        //
+        $validated = $request->validated();
+        dd($validated);
+        // Excel::import(new CertificateImport($validated), $validated->file('file'));
     }
 
     /**
