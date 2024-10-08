@@ -7,7 +7,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
-import { Link } from "@inertiajs/react";
 
 interface Props {
     categoryData: CategoryData[];
