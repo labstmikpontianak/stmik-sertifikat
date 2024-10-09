@@ -99,20 +99,10 @@ export default function Login({
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="flex flex-col items-start">
+                        <CardFooter>
                             <Button type="submit" disabled={processing}>
                                 Login
                             </Button>
-                            <div className="text-xs text-gray-400">
-                                Belum Punya Akun?{" "}
-                                <Button
-                                    variant={"link"}
-                                    className="px-0 py-0"
-                                    asChild
-                                >
-                                    <Link href="register">Buat Akun</Link>
-                                </Button>
-                            </div>
                         </CardFooter>
                     </form>
                 </Card>

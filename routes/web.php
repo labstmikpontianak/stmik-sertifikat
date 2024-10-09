@@ -8,9 +8,12 @@ use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::post('/', [HomeController::class, 'getCertificate'])->name('home.getCertificate');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('dashboard')->group(function () {
+    Route::get('home', function () {
+        return Inertia::render('AdminHome');
+    })->name('dashboard.home');
+})->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

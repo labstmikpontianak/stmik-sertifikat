@@ -118,7 +118,7 @@ export default function Register() {
                                     className="px-0 py-0"
                                     asChild
                                 >
-                                    <Link href="login">Masuk</Link>
+                                    <Link href="admin/login">Masuk</Link>
                                 </Button>
                             </div>
                         </CardFooter>
