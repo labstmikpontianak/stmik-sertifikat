@@ -4,15 +4,10 @@ import { Head, Link } from "@inertiajs/react";
 
 const AdminHome = () => {
     return (
-        <DashboardLayout>
+        <DashboardLayout pageTitle="Halaman Beranda" pageBreadcrumb="Beranda">
             <Head title="Dashboard" />
 
-            <h1>Hello World</h1>
-            <Button asChild>
-                <Link method="post" href={route("logout")} as="button">
-                    Logout
-                </Link>
-            </Button>
+            <h1>Halaman Beranda</h1>
         </DashboardLayout>
     );
 };
