@@ -35,7 +35,6 @@ const EditCertificate: React.FC<Props> = ({ state, setState, idata }) => {
     });
 
     React.useEffect(() => {
-        console.log(idata);
         if (idata) {
             setData("nim", idata.nim);
             setData("nama_lengkap", idata.nama_lengkap);
