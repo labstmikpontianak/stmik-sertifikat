@@ -9,10 +9,12 @@ use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('home', function () {
+    Route::get('/home', function () {
         return Inertia::render('AdminHome');
     })->name('dashboard.home');
-    Route::get('kategori', [CategoryController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori', [CategoryController::class, 'index'])->name('kategori.index');
+    Route::post('/kategori', [CategoryController::class, 'store'])->name('kategori.store');
+    Route::delete('/kategori/{id}', [CategoryController::class, 'destroy'])->name('kategori.destroy');
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {

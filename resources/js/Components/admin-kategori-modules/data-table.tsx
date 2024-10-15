@@ -1,8 +1,13 @@
 import {
     ColumnDef,
+    ColumnFiltersState,
+    SortingState,
+    VisibilityState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -13,27 +18,70 @@ import {
     TableHeader,
     TableRow,
 } from "../ui/table";
-import { Button } from "../ui/button";
 import { DataTablePagination } from "../DataTablePagination";
+import React from "react";
+import { Input } from "../ui/input";
+import { DataTableViewOptions } from "../DataTableViewOptionsProps";
+import { Button } from "../ui/button";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    setState: (state: boolean) => void;
 }
 
 export function CategoryDataTable<TData, TValue>({
     columns,
     data,
+    setState,
 }: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] =
+        React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] =
+        React.useState<VisibilityState>({});
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+        },
     });
 
     return (
-        <div className="space-y-4">
+        <div>
+            <div className="flex items-center justify-between py-4">
+                <Input
+                    placeholder="Filter category..."
+                    value={
+                        (table
+                            .getColumn("category_name")
+                            ?.getFilterValue() as string) ?? ""
+                    }
+                    onChange={(event) =>
+                        table
+                            .getColumn("category_name")
+                            ?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
+                <div className="flex items-center space-x-4">
+                    <DataTableViewOptions table={table} />
+                    <Button onClick={() => setState(true)}>
+                        Tambah Kategori
+                    </Button>
+                </div>
+            </div>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -41,7 +89,10 @@ export function CategoryDataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            key={header.id}
+                                            className="bg-cyan-950 text-white"
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(

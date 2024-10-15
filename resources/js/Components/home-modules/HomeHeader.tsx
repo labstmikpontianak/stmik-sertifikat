@@ -7,6 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import { Link } from "@inertiajs/react";
 
 interface Props {
     categoryData: CategoryData[];
@@ -63,14 +64,13 @@ const HomeHeader: React.FC<Props> = ({ categoryData, handleParamsChange }) => {
                     </SelectContent>
                 </Select>
 
-                <Button
+                {/* <Button
                     variant="outline"
                     className="bg-transparent text-white border-2"
                     disabled
                 >
-                    Disabled Button
-                    {/* <Link href="#">Disable Button</Link> */}
-                </Button>
+                    <Link href="#">Disable Button</Link>
+                </Button> */}
             </div>
         </header>
     );

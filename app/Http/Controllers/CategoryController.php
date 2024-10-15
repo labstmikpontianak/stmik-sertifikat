@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,9 +32,13 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        //
+        Category::create([
+            'category_name' => $request->category_name
+        ]);
+
+        return Redirect::route('kategori.index');
     }
 
     /**
@@ -62,8 +68,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id): RedirectResponse
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return Redirect::route('kategori.index');
     }
 }
