@@ -10,13 +10,13 @@ interface Props {
     data: CategoryData[];
 }
 
-const AdminKategoriIndex: React.FC<Props> = ({ data }) => {
+const AdminKategori: React.FC<Props> = ({ data }) => {
     const [addCategoryState, setAddCategoryState] =
         React.useState<boolean>(false);
 
     return (
         <DashboardLayout pageTitle="Kelola Kategori" pageBreadcrumb="Kategori">
-            <Head title="Dashboard" />
+            <Head title="Category" />
 
             <AddCategory
                 state={addCategoryState}
@@ -33,4 +33,4 @@ const AdminKategoriIndex: React.FC<Props> = ({ data }) => {
     );
 };
 
-export default AdminKategoriIndex;
+export default AdminKategori;

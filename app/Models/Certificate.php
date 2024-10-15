@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Certificate extends Model
 {
@@ -29,4 +30,9 @@ class Certificate extends Model
         "program_studi",
         "link"
     ];
+
+    public function categories(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, "category_id", "id");
+    }
 }

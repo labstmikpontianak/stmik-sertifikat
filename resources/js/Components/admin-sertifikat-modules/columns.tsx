@@ -1,4 +1,4 @@
-import { CategoryData } from "@/types";
+import { CertificateData } from "@/types";
 import { router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import {
@@ -6,6 +6,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
@@ -14,17 +15,49 @@ import moment from "moment";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import React from "react";
 import { ClipLoader } from "react-spinners";
-import EditCategory from "./EditCategory";
+import { Badge } from "../ui/badge";
+import { toast } from "sonner";
 
-export const categoryColumns: ColumnDef<CategoryData>[] = [
+export const certificateColumns: ColumnDef<CertificateData>[] = [
     {
         accessorKey: "id",
         header: "ID",
+        cell: ({ row }) => {
+            const program_studi = row.original.program_studi;
+            const idCertificate: string = row.getValue("id");
+            return (
+                <div className="space-y-2">
+                    {program_studi === "TI" ? (
+                        <Badge className="bg-emerald-700">
+                            Teknik Informatika
+                        </Badge>
+                    ) : (
+                        <Badge className="bg-rose-700">Sistem Informasi</Badge>
+                    )}
+                    <p>{idCertificate}</p>
+                </div>
+            );
+        },
     },
     {
-        accessorKey: "category_name",
+        id: "categories",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Nama Kategori" />
+        ),
+        cell: ({ row }) => {
+            return row.original.categories?.category_name;
+        },
+    },
+    {
+        accessorKey: "nim",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="NIM" />
+        ),
+    },
+    {
+        accessorKey: "nama_lengkap",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Nama Mahasiswa" />
         ),
     },
     {
@@ -65,11 +98,11 @@ export const categoryColumns: ColumnDef<CategoryData>[] = [
 
             return (
                 <>
-                    <EditCategory
+                    {/* <EditCategory
                         state={editCategoryState}
                         setState={setEditCategoryState}
                         idata={row.original}
-                    />
+                    /> */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant={"ghost"} className="h-8 w-8 p-0">
@@ -83,6 +116,17 @@ export const categoryColumns: ColumnDef<CategoryData>[] = [
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    navigator.clipboard.writeText(
+                                        row.original.link
+                                    );
+                                    toast.success("Link telah Dicopy");
+                                }}
+                            >
+                                Copy Link
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 onClick={() => {
                                     setEditCategoryState(true);

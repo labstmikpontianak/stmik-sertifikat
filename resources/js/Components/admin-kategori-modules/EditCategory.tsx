@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import React, { FormEventHandler } from "react";
 import {
     Sheet,
     SheetContent,
@@ -11,25 +11,30 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { CategoryData } from "@/types";
 
 interface Props {
     state: boolean;
     setState: (state: boolean) => void;
+    idata: CategoryData;
 }
 
-const EditCategory: React.FC<Props> = ({ state, setState }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        category_name: "",
+const EditCategory: React.FC<Props> = ({ state, setState, idata }) => {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        category_name: idata.category_name,
     });
+
+    React.useEffect(() => {
+        if (idata) {
+            setData("category_name", idata.category_name);
+        }
+    }, [idata]);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        console.log(e);
-
-        post(route("kategori.store"), {
+        patch(`/dashboard/kategori/${idata.id}`, {
             onFinish: () => {
-                reset("category_name");
                 setState(false);
             },
         });

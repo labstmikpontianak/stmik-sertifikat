@@ -25,8 +25,6 @@ const AddCategory: React.FC<Props> = ({ state, setState }) => {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        console.log(e);
-
         post(route("kategori.store"), {
             onFinish: () => {
                 reset("category_name");

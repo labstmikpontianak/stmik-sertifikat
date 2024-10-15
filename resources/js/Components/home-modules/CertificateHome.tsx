@@ -24,7 +24,6 @@ const CertificateHome: React.FC<Props> = ({ categoryParams, submitHandle }) => {
 
     useEffect(() => {
         if (value.length < 9 || value.length > 10) {
-            console.log("Type Error");
             setError(true);
             setErrorMessage("Masukkan NIM dengan Benar!");
         } else {

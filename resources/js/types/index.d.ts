@@ -23,6 +23,7 @@ export interface CategoryData {
 export interface CertificateData {
     id: string;
     category_id: string;
+    categories?: CategoryData;
     nim: string;
     nama_lengkap: string;
     program_studi: "TI" | "SI";

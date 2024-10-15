@@ -18,15 +18,7 @@ class CategoryController extends Controller
     public function index(): Response
     {
         $data = Category::all();
-        return Inertia::render('AdminKategori/AdminKategoriIndex', compact('data'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('AdminKategori', compact('data'));
     }
 
     /**
@@ -42,27 +34,14 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id): RedirectResponse
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->update($request->all());
+
+        return Redirect::route('kategori.index');
     }
 
     /**
