@@ -20,7 +20,7 @@ interface Props {
 }
 
 const EditCategory: React.FC<Props> = ({ state, setState, idata }) => {
-    const { data, setData, patch, processing, errors, reset } = useForm({
+    const { data, setData, patch, processing, errors } = useForm({
         category_name: idata.category_name,
     });
 

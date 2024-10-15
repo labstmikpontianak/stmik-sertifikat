@@ -37,7 +37,7 @@ const AdminCertificate: React.FC<Props> = ({ data, cdata }) => {
             <div>
                 <CertificateDataTable
                     columns={certificateColumns}
-                    data={data}
+                    data={data || []}
                     setTambahState={setAddCertificateState}
                     setUploadState={setImportCertificateState}
                 />

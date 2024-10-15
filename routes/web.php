@@ -20,6 +20,8 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/downloadtemplatesertifikat', [CertificateController::class, 'downloadTemplate'])->name('sertifikat.downloadTemplate');
     Route::post('/sertifikatOne', [CertificateController::class, 'storeOne'])->name('sertifikat.storeOne');
     Route::post('/sertifikat', [CertificateController::class, 'store'])->name('sertifikat.store');
+    Route::patch('/sertifikat/{id}', [CertificateController::class, 'update'])->name('sertifikat.update');
+    Route::delete('/sertifikat/{id}', [CertificateController::class, 'destroy'])->name('sertifikat.destroy');
 })->middleware('auth');
 
 require __DIR__ . '/auth.php';

@@ -17,6 +17,7 @@ import React from "react";
 import { ClipLoader } from "react-spinners";
 import { Badge } from "../ui/badge";
 import { toast } from "sonner";
+import EditCertificate from "./EditCertificate";
 
 export const certificateColumns: ColumnDef<CertificateData>[] = [
     {
@@ -40,12 +41,13 @@ export const certificateColumns: ColumnDef<CertificateData>[] = [
         },
     },
     {
-        id: "categories",
+        id: "Nama Kategori",
+        accessorFn: (row) => row.categories?.category_name || "Unknown",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Nama Kategori" />
         ),
-        cell: ({ row }) => {
-            return row.original.categories?.category_name;
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
         },
     },
     {
@@ -78,16 +80,16 @@ export const certificateColumns: ColumnDef<CertificateData>[] = [
         id: "actions",
         cell: ({ row }) => {
             const [loading, setLoading] = React.useState<boolean>(false);
-            const [editCategoryState, setEditCategoryState] =
+            const [editCertificateState, setEditCertificateState] =
                 React.useState<boolean>(false);
-            let category = row.original;
+            let certificate = row.original;
 
-            const deleteCategory = (id: string) => {
+            const deleteCertificate = (id: string) => {
                 setLoading(true);
-                router.delete(`/dashboard/kategori/${id}`, {
+                router.delete(`/dashboard/sertifikat/${id}`, {
                     onSuccess: () => {
                         setLoading(false);
-                        alert("Category deleted successfully");
+                        alert("Certificate deleted successfully");
                     },
                     onError: (errors) => {
                         setLoading(false);
@@ -98,11 +100,11 @@ export const certificateColumns: ColumnDef<CertificateData>[] = [
 
             return (
                 <>
-                    {/* <EditCategory
-                        state={editCategoryState}
-                        setState={setEditCategoryState}
+                    <EditCertificate
+                        state={editCertificateState}
+                        setState={setEditCertificateState}
                         idata={row.original}
-                    /> */}
+                    />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant={"ghost"} className="h-8 w-8 p-0">
@@ -129,17 +131,17 @@ export const certificateColumns: ColumnDef<CertificateData>[] = [
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 onClick={() => {
-                                    setEditCategoryState(true);
+                                    setEditCertificateState(true);
                                 }}
                             >
-                                Edit Category
+                                Edit Certificate
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 onClick={() => {
-                                    deleteCategory(category.id);
+                                    deleteCertificate(certificate.id);
                                 }}
                             >
-                                Delete Category
+                                Delete Certificate
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
