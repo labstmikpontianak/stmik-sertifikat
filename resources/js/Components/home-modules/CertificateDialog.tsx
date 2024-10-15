@@ -8,7 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "../ui/dialog";
-import { Link } from "@inertiajs/react";
 
 interface Props {
     open: boolean;
@@ -45,8 +44,12 @@ const CertificateDialog: React.FC<Props> = ({
                 </DialogHeader>
                 <DialogFooter>
                     <div className="flex justify-start w-full">
-                        <Button asChild>
-                            <Link href={data[0].link}>Download</Link>
+                        <Button
+                            onClick={() => {
+                                window.open(data[0].link, "_blank");
+                            }}
+                        >
+                            Download
                         </Button>
                     </div>
                 </DialogFooter>

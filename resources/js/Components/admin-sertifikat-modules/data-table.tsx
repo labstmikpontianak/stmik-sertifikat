@@ -27,13 +27,15 @@ import { Button } from "../ui/button";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    setState: (state: boolean) => void;
+    setTambahState: (state: boolean) => void;
+    setUploadState: (state: boolean) => void;
 }
 
-export function CategoryDataTable<TData, TValue>({
+export function CertificateDataTable<TData, TValue>({
     columns,
     data,
-    setState,
+    setTambahState,
+    setUploadState,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
@@ -61,24 +63,51 @@ export function CategoryDataTable<TData, TValue>({
     return (
         <div>
             <div className="flex items-center justify-between py-4">
-                <Input
-                    placeholder="Filter category..."
-                    value={
-                        (table
-                            .getColumn("category_name")
-                            ?.getFilterValue() as string) ?? ""
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn("category_name")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                <div className="flex gap-2">
+                    <Input
+                        placeholder="Filter Nama Mahasiswa..."
+                        value={
+                            (table
+                                .getColumn("nama_lengkap")
+                                ?.getFilterValue() as string) ?? ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn("nama_lengkap")
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                    <Input
+                        placeholder="Filter NIM Mahasiswa..."
+                        value={
+                            (table
+                                .getColumn("nim")
+                                ?.getFilterValue() as string) ?? ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn("nim")
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                </div>
                 <div className="flex items-center space-x-4">
                     <DataTableViewOptions table={table} />
-                    <Button onClick={() => setState(true)}>
-                        Tambah Kategori
+                    <Button
+                        onClick={() => {
+                            window.location.href =
+                                "/dashboard/downloadtemplatesertifikat";
+                        }}
+                    >
+                        Download Template Excel
+                    </Button>
+                    <Button onClick={() => setUploadState(true)}>
+                        Import Data Sertifikat
+                    </Button>
+                    <Button onClick={() => setTambahState(true)}>
+                        Tambah Sertifikat
                     </Button>
                 </div>
             </div>

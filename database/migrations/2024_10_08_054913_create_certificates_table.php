@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid("category_id")->references("id")->on("categories")->onDelete("cascade");
             $table->string("nim", 10);
             $table->string("nama_lengkap", 100);
-            $table->enum("program_studi", ["TI", "SI"]);
+            $table->string("program_studi", 5);
             $table->text("link");
             $table->timestamps();
         });

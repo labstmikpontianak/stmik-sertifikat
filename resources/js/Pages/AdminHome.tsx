@@ -1,6 +1,5 @@
-import { Button } from "@/Components/ui/button";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 const AdminHome = () => {
     return (

@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\Certificate;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CertificateImport implements ToModel
+class CertificateImport implements ToModel, WithHeadingRow
 {
 
     protected $request;
@@ -24,10 +25,10 @@ class CertificateImport implements ToModel
     {
         return new Certificate([
             'category_id' => $this->request->input('category_id'),
-            'nim' => $row[0],
-            'nama_lengkap' => $row[1],
-            'program_studi' => $row[2],
-            'link' => $row[3]
+            'nim' => $row['nim'],
+            'nama_lengkap' => $row['nama_lengkap'],
+            'program_studi' => $row['program_studi'],
+            'link' => $row['link']
         ]);
     }
 }

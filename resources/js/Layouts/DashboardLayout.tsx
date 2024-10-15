@@ -6,6 +6,7 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import { Button } from "@/Components/ui/button";
+import { Toaster } from "@/Components/ui/sonner";
 import { Link, usePage } from "@inertiajs/react";
 
 interface Props {
@@ -23,6 +24,7 @@ const DashboardLayout: React.FC<Props> = ({
 
     return (
         <main>
+            <Toaster richColors position="top-right" />
             <header className="px-4 py-4 flex justify-between items-center bg-cyan-950">
                 {/* Logo and Title */}
                 <div className="flex space-x-4 items-center">
