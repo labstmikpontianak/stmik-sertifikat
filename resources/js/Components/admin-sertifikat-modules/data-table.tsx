@@ -5,6 +5,8 @@ import {
     VisibilityState,
     flexRender,
     getCoreRowModel,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
@@ -23,6 +25,8 @@ import React from "react";
 import { Input } from "../ui/input";
 import { DataTableViewOptions } from "../DataTableViewOptionsProps";
 import { Button } from "../ui/button";
+import { Cross2Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { DataTableFacetedFilter } from "../DataTableFacetedFilter";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -32,8 +36,8 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function CertificateDataTable<TData, TValue>({
-    columns,
     data,
+    columns,
     setTambahState,
     setUploadState,
 }: DataTableProps<TData, TValue>) {
@@ -46,22 +50,45 @@ export function CertificateDataTable<TData, TValue>({
     const table = useReactTable({
         data,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
         },
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setColumnVisibility,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
     });
+
+    const isFiltered = table.getState().columnFilters.length > 0;
+
+    const kategoriColumn = table.getColumn("Nama Kategori");
+    const kategoriFacetUniqueValues = kategoriColumn!.getFacetedUniqueValues();
+    const kategoriOptions = Array.from(kategoriFacetUniqueValues.keys()).map(
+        (k) => {
+            return {
+                value: k,
+                label: k,
+                icon: QuestionMarkCircledIcon,
+            };
+        }
+    );
 
     return (
         <div>
+            {table.getColumn("Nama Kategori") && (
+                <DataTableFacetedFilter
+                    column={table.getColumn("Nama Kategori")}
+                    title="Nama Kategori"
+                    options={kategoriOptions}
+                />
+            )}
             <div className="flex items-center justify-between py-4">
                 <div className="flex gap-2">
                     <Input
@@ -76,22 +103,18 @@ export function CertificateDataTable<TData, TValue>({
                                 .getColumn("nama_lengkap")
                                 ?.setFilterValue(event.target.value)
                         }
-                        className="max-w-sm"
+                        className="h-8 w-[150px] lg:w-[250px]"
                     />
-                    <Input
-                        placeholder="Filter NIM Mahasiswa..."
-                        value={
-                            (table
-                                .getColumn("nim")
-                                ?.getFilterValue() as string) ?? ""
-                        }
-                        onChange={(event) =>
-                            table
-                                .getColumn("nim")
-                                ?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    />
+                    {isFiltered && (
+                        <Button
+                            variant="ghost"
+                            onClick={() => table.resetColumnFilters()}
+                            className="h-8 px-2 lg:px-3"
+                        >
+                            Reset
+                            <Cross2Icon className="ml-2 h-4 w-4" />
+                        </Button>
+                    )}
                 </div>
                 <div className="flex items-center space-x-4">
                     <DataTableViewOptions table={table} />

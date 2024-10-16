@@ -33,16 +33,16 @@ const CertificateHome: React.FC<Props> = ({ categoryParams, submitHandle }) => {
     }, [value]);
 
     return (
-        <div className="flex justify-between items-center px-32 mt-20">
+        <div className="xl:flex xl:justify-between xl:items-center px-12 xl:px-32 xl:mt-20">
             <div>
-                <h3 className="text-3xl font-bold text-white">
+                <h3 className="text-xl xl:text-3xl font-bold text-white">
                     STMIK Pontianak
                 </h3>
-                <h4 className="text-2xl font-semibold text-white">
+                <h4 className="text-lg xl:text-2xl font-semibold text-white">
                     Download Sertifikat {categoryParams.name}
                 </h4>
             </div>
-            <Card className="w-[350px]">
+            <Card className="max-w-sm xl:w-[350px] mt-4 xl:mt-0">
                 <CardHeader>
                     <CardTitle>Download Sertifikat</CardTitle>
                     <CardDescription>

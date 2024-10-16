@@ -65,16 +65,22 @@ class CertificateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCertificateRequest $request, Certificate $certificate)
+    public function update(UpdateCertificateRequest $request, $id): RedirectResponse
     {
-        //
+        $certificate = Certificate::findOrFail($id);
+        $certificate->update($request->all());
+
+        return Redirect::route('sertifikat.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Certificate $certificate)
+    public function destroy($id): RedirectResponse
     {
-        //
+        $certificate = Certificate::findOrFail($id);
+        $certificate->delete();
+
+        return Redirect::route('sertifikat.index');
     }
 }

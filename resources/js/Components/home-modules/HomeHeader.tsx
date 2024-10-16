@@ -26,7 +26,7 @@ const HomeHeader: React.FC<Props> = ({ categoryData, handleParamsChange }) => {
     };
 
     return (
-        <header className="px-8 py-8 flex justify-between items-center">
+        <header className="px-8 py-8 xl:flex xl:justify-between xl:items-center space-y-6 xl:space-y-0">
             {/* Logo and Title */}
             <div className="flex space-x-4 items-center">
                 <img

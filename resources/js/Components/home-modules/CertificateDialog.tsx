@@ -43,7 +43,7 @@ const CertificateDialog: React.FC<Props> = ({
                     </p>
                 </DialogHeader>
                 <DialogFooter>
-                    <div className="flex justify-start w-full">
+                    <div className="flex justify-center xl:justify-start w-full">
                         <Button
                             onClick={() => {
                                 window.open(data[0].link, "_blank");
